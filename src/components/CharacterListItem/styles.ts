@@ -63,7 +63,7 @@ interface CharacterStatusProps {
 
 const colors = {
   Alive: "#209020",
-  Dead: "#902020",
+  Dead: "#dc1a22",
 };
 
 export const CharacterStatus = styled.p<CharacterStatusProps>`
