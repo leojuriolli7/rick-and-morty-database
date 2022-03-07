@@ -47,10 +47,10 @@ export function EpisodeDetailsModal({
     <Modal show={isOpen} onHide={closeModal} keyboard={true}>
       <S.Container>
         <Modal.Header closeButton>
-          <Modal.Title>{episode?.name}</Modal.Title>
+          <Modal.Title>Episode: {episode?.name}</Modal.Title>
         </Modal.Header>
         <Modal.Body className="d-flex align-items-center flex-column">
-          <S.Title>Characters:</S.Title>
+          <S.Title>Characters featured:</S.Title>
           <S.DetailsContainer>
             {characters?.map((character) => (
               <S.Character key={character.name}>
