@@ -39,7 +39,7 @@ export function Header() {
             <S.ListItem>
               <Link href="/locations">
                 <S.MenuOption isSelected={router.pathname === "/locations"}>
-                  Location
+                  Locations
                 </S.MenuOption>
               </Link>
             </S.ListItem>
