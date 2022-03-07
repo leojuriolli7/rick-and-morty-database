@@ -16,6 +16,14 @@ export const DetailsContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   margin-top: 2rem;
+
+  @media (max-width: 423px) {
+    gap: 1rem;
+  }
+
+  @media (max-width: 423px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
 `;
 
 export const Details = styled.p`
