@@ -1,5 +1,4 @@
 /* eslint-disable @next/next/no-img-element */
-import Image from "next/image";
 import { useState, useEffect } from "react";
 import { Modal, Button } from "react-bootstrap";
 import { api } from "../../../pages/api/api";
@@ -41,6 +40,7 @@ export function EpisodeDetailsModal({
     if (!isOpen) {
       setCharacters([]);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen]);
 
   return (

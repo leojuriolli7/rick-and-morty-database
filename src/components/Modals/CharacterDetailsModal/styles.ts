@@ -36,7 +36,7 @@ export const Details = styled.p`
   text-align: center;
 `;
 
-export const DetailsTitle = styled(Details)`
+export const DetailsTitle = styled.span`
   display: inline;
   font-size: 22px;
   font-weight: 600;

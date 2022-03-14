@@ -26,6 +26,12 @@ export const Content = styled.div`
   background-color: var(--shape);
   box-shadow: 1px 5px 15px 5px rgba(0, 0, 0, 0.1);
   border-radius: 15px;
+  cursor: pointer;
+  transition: 0.3s;
+
+  &:hover {
+    transform: scale(1.07);
+  }
 `;
 
 export const LocationName = styled.h2`
