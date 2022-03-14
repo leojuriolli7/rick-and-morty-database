@@ -41,3 +41,17 @@ export const DetailsTitle = styled.span`
   font-size: 22px;
   font-weight: 600;
 `;
+
+interface CharacterStatusProps {
+  activeStatus: "Alive" | "Dead";
+}
+
+const colors = {
+  Alive: "#209020",
+  Dead: "#dc1a22",
+};
+
+export const CharacterStatus = styled(DetailsTitle)<CharacterStatusProps>`
+  color: ${(props) => colors[props.activeStatus]};
+  font-weight: 500;
+`;

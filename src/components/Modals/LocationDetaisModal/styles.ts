@@ -53,7 +53,7 @@ export const ResidentName = styled.p`
   text-align: center;
 `;
 
-export const NoResidentsContainer = styled.p`
+export const NoResidentsContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;

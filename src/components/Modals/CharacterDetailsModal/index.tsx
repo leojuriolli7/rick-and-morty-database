@@ -55,7 +55,10 @@ export function CharacterDetailsModal({
           <S.CharacterImage src={character.image} alt="Character picture." />
           <S.DetailsContainer>
             <S.Details>
-              <S.DetailsTitle>Status:</S.DetailsTitle> {character.status}
+              <S.DetailsTitle>Status:</S.DetailsTitle>{" "}
+              <S.CharacterStatus activeStatus={character.status}>
+                {character.status}
+              </S.CharacterStatus>
             </S.Details>
             <S.Details>
               <S.DetailsTitle>Species:</S.DetailsTitle> {character.species}
