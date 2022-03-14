@@ -67,14 +67,15 @@ export function CharacterDetailsModal({
               <S.DetailsTitle>Origin:</S.DetailsTitle> {character.origin?.name}
             </S.Details>
             <S.Details>
-              <S.DetailsTitle>Current Location:</S.DetailsTitle>{" "}
+              <S.DetailsTitle>Last Known Location:</S.DetailsTitle>{" "}
               {character.location?.name}
             </S.Details>
             <S.Details>
-              <S.DetailsTitle>First seen:</S.DetailsTitle> {episodes[0]?.name}
+              <S.DetailsTitle>First seen in:</S.DetailsTitle>{" "}
+              {episodes[0]?.name}
             </S.Details>
             <S.Details>
-              <S.DetailsTitle>Last seen:</S.DetailsTitle>{" "}
+              <S.DetailsTitle>Last seen in:</S.DetailsTitle>{" "}
               {episodes.slice(-1).pop()?.name}
             </S.Details>
           </S.DetailsContainer>
