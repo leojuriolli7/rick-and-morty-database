@@ -3,6 +3,7 @@ import styled from "styled-components";
 export const Container = styled.main`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  margin-bottom: 2rem;
 
   @media (max-width: 848px) {
     grid-template-columns: repeat(2, 1fr);
@@ -21,7 +22,7 @@ export const Content = styled.div`
   text-align: center;
   padding: 0 1rem;
   margin: 1rem;
-  height: 12rem;
+  height: 16rem;
   background-color: var(--shape);
   box-shadow: 1px 5px 15px 5px rgba(0, 0, 0, 0.1);
   border-radius: 15px;
