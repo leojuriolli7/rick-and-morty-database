@@ -20,6 +20,7 @@ interface CharacterInterface {
   location: {
     name: string;
   };
+  episode: [];
 }
 
 export function CharacterListItem() {

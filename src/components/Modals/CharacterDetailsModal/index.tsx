@@ -1,5 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
+import { useEffect, useState } from "react";
 import { Modal, Button, ModalTitle } from "react-bootstrap";
+import { api } from "../../../pages/api/api";
 import * as S from "./styles";
 
 interface CharacterDetailsModalProps {
@@ -8,11 +10,41 @@ interface CharacterDetailsModalProps {
   closeModal: () => void;
 }
 
+interface EpisodesProps {
+  name: string;
+}
+
 export function CharacterDetailsModal({
   character,
   isOpen,
   closeModal,
 }: CharacterDetailsModalProps) {
+  const [episodes, setEpisodes] = useState<EpisodesProps[]>([]);
+
+  const fetchEpisodes = async () => {
+    api
+      .get(character?.episode[0])
+      .then((response) =>
+        setEpisodes((episode) => [...episode, response.data])
+      );
+    api
+      .get(character?.episode[character?.episode.length - 1])
+      .then((response) =>
+        setEpisodes((episode) => [...episode, response.data])
+      );
+  };
+
+  useEffect(() => {
+    if (isOpen) {
+      fetchEpisodes();
+    }
+
+    if (!isOpen) {
+      setEpisodes([]);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOpen]);
+
   return (
     <Modal show={isOpen} onHide={closeModal} backdrop="static" keyboard={true}>
       <S.Container>
@@ -37,6 +69,13 @@ export function CharacterDetailsModal({
             <S.Details>
               <S.DetailsTitle>Current Location:</S.DetailsTitle>{" "}
               {character.location?.name}
+            </S.Details>
+            <S.Details>
+              <S.DetailsTitle>First seen:</S.DetailsTitle> {episodes[0]?.name}
+            </S.Details>
+            <S.Details>
+              <S.DetailsTitle>Last seen:</S.DetailsTitle>{" "}
+              {episodes.slice(-1).pop()?.name}
             </S.Details>
           </S.DetailsContainer>
         </Modal.Body>

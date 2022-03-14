@@ -18,6 +18,11 @@ export const CharacterImage = styled.img`
   border-radius: 15px;
   margin-top: 1rem;
   box-shadow: 1px 5px 15px 5px rgba(0, 0, 0, 0.1);
+
+  @media (max-width: 298px) {
+    width: 200px;
+    height: 200px;
+  }
 `;
 
 export const DetailsContainer = styled.div`
