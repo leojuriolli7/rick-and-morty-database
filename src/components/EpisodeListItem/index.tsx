@@ -1,44 +1,65 @@
 import { Pagination } from "@mui/material";
 import { useRouter } from "next/router";
-import { useState } from "react";
-import { useQuery } from "react-query";
-
+import { useEffect, useState } from "react";
+import { api } from "../../pages/api/api";
 import { EpisodeDetailsModal } from "../Modals/EpisodeDetailsModal";
 import * as S from "./styles";
+
+interface EpisodeInterface {
+  id: number;
+  name: string;
+  air_date: string;
+  episode: string;
+  characters: any;
+}
 
 export function EpisodeListItem() {
   const router = useRouter();
   const [page, setPage] = useState(Number(router.query.page || 1));
+  const [episodes, setEpisodes] = useState<EpisodeInterface[]>([]);
+  const [episodePackageInfo, setEpisodePackageInfo] = useState(null);
   const [openModal, setOpenModal] = useState(false);
   const [currentEpisode, setCurrentEpisode] = useState(null);
 
-  const { data } = useQuery(
-    ["episodes", page],
-    async () =>
-      await fetch(`https://rickandmortyapi.com/api/episode/?page=${page}`).then(
-        (result) => result.json()
-      ),
-    {
-      keepPreviousData: true,
-      refetchOnMount: false,
-      refetchOnWindowFocus: false,
-    }
-  );
+  const fetchEpisodes = async () => {
+    await api
+      .get(`episode/?page=${page}`)
+      .then((response) => setEpisodes(response.data.results));
+  };
 
-  function handlePaginationChange(e, value) {
-    setPage(value);
-    router.push(`/episodes/?page=${value}`, undefined, { shallow: true });
-  }
+  const fetchData = async () => {
+    await api
+      .get(`episode/?page=${page}`)
+      .then((response) => setEpisodePackageInfo(response));
+  };
+
+  const fetchEpisodesOnPageChange = async (value) => {
+    await api
+      .get(`episode/?page=${value}`)
+      .then((response) => setEpisodes(response.data.results));
+  };
+
+  useEffect(() => {
+    fetchEpisodes();
+    fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const setCurrentEpisodeAndOpenModal = (episode) => {
     setCurrentEpisode(episode);
     setOpenModal(true);
   };
 
+  function handlePaginationChange(e, value) {
+    setPage(value);
+    router.push(`/episodes/?page=${value}`, undefined, { shallow: true });
+    fetchEpisodesOnPageChange(value);
+  }
+
   return (
     <>
       <S.Container>
-        {data?.results?.map((episode) => {
+        {episodes?.map((episode) => {
           return (
             <S.Content
               key={episode.id}
@@ -58,7 +79,7 @@ export function EpisodeListItem() {
         />
       </S.Container>
       <Pagination
-        count={data?.info.pages}
+        count={episodePackageInfo?.data?.info.pages}
         color="primary"
         className="pagination"
         page={page}
