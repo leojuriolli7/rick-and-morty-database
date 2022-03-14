@@ -19,7 +19,7 @@ export const Content = styled.div`
     font-size: 1.3rem;
 
     &:hover {
-      filter: brightness(2);
+      filter: brightness(2.3);
     }
   }
 `;

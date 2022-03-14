@@ -15,7 +15,7 @@ export const Container = styled.div`
     grid-template-columns: repeat(2, 1fr);
   }
 
-  @media (max-width: 320px) {
+  @media (max-width: 340px) {
     grid-template-columns: 1fr;
   }
 `;
@@ -51,11 +51,15 @@ export const CharacterImage = styled.img`
 `;
 
 export const CharacterName = styled.h2`
-  padding-top: 1rem;
+  margin-top: 1rem;
   font-size: 1.3rem;
   line-height: 30px;
   text-align: center;
   color: var(--text);
+
+  @media (max-width: 429px) {
+    margin-top: 0.5rem;
+  }
 `;
 
 interface CharacterStatusProps {
@@ -70,4 +74,8 @@ const colors = {
 export const CharacterStatus = styled.p<CharacterStatusProps>`
   color: ${(props) => colors[props.activeStatus]};
   font-weight: 600;
+
+  @media (max-width: 429px) {
+    margin-bottom: 0.5rem;
+  }
 `;

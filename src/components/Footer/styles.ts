@@ -8,7 +8,7 @@ export const Container = styled.footer`
 export const Content = styled.div`
   max-width: 1000px;
   margin: 0 auto;
-  padding: 1.3rem 0;
+  padding: 1.5rem 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -16,6 +16,18 @@ export const Content = styled.div`
 
 export const FooterText = styled.p`
   color: var(--text);
-  font-size: 1rem;
+  font-size: 1.2rem;
   margin: 0;
+`;
+
+export const FooterLink = styled.a`
+  color: var(--text);
+  font-size: 1.2rem;
+  margin: 0;
+
+  &:hover {
+    color: var(--text);
+    filter: brightness(2.3);
+    cursor: pointer;
+  }
 `;

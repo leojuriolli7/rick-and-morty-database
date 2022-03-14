@@ -15,6 +15,7 @@ export function Header() {
           <Image
             src={logoImg}
             alt="Small logo"
+            title="Go to Rick And Morty API"
             width={45}
             height={45}
             onClick={() => window.open("https://rickandmortyapi.com/")}
