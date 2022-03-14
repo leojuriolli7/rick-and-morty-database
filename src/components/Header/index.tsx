@@ -3,10 +3,10 @@ import { useRouter } from "next/router";
 import * as S from "./styles";
 import logoImg from "../../assets/headerlogo.svg";
 import Image from "next/image";
+import { HamburguerMenu } from "../HamburguerMenu";
 
 export function Header() {
   const router = useRouter();
-  console.log("~ router", router);
 
   return (
     <S.Container>
@@ -15,35 +15,24 @@ export function Header() {
           <Image
             src={logoImg}
             alt="Small logo"
-            width={40}
-            height={40}
+            width={45}
+            height={45}
             onClick={() => window.open("https://rickandmortyapi.com/")}
           />
         </S.ImageContainer>
         <S.Navigation>
           <S.UnorganizedList>
-            <S.ListItem>
-              <Link href="/">
-                <S.MenuOption isSelected={router.pathname === "/"}>
-                  Characters
-                </S.MenuOption>
-              </Link>
+            <S.ListItem isSelected={router.pathname === "/"}>
+              <Link href="/">Characters</Link>
             </S.ListItem>
-            <S.ListItem>
-              <Link href="/episodes">
-                <S.MenuOption isSelected={router.pathname === "/episodes"}>
-                  Episodes
-                </S.MenuOption>
-              </Link>
+            <S.ListItem isSelected={router.pathname === "/episodes"}>
+              <Link href="/episodes">Episodes</Link>
             </S.ListItem>
-            <S.ListItem>
-              <Link href="/locations">
-                <S.MenuOption isSelected={router.pathname === "/locations"}>
-                  Locations
-                </S.MenuOption>
-              </Link>
+            <S.ListItem isSelected={router.pathname === "/locations"}>
+              <Link href="/locations">Locations</Link>
             </S.ListItem>
           </S.UnorganizedList>
+          <HamburguerMenu />
         </S.Navigation>
       </S.Content>
     </S.Container>

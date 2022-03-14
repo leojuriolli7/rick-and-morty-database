@@ -7,17 +7,25 @@ import { CharacterDetailsModal } from "../Modals/CharacterDetailsModal";
 import * as S from "./styles";
 
 interface CharacterInterface {
+  includes(searchTerm: string): unknown;
   id: string;
   name: string;
   status: string;
   species: string;
   gender: string;
   image: string;
+  origin: {
+    name: string;
+  };
+  location: {
+    name: string;
+  };
 }
 
 export function CharacterListItem() {
   const router = useRouter();
   const [page, setPage] = useState(Number(router.query.page || 1));
+  // const [searchTerm, setSearchTerm] = useState("");
   const [characterInfo, setCharacterInfo] = useState<CharacterInterface[]>([]);
   const [characterPackageInfo, setCharacterPackageInfo] = useState(null);
   const [characterDetailsModal, setCharacterDetailsModal] = useState(false);
@@ -42,6 +50,10 @@ export function CharacterListItem() {
       .then((response) => setCharacterInfo(response.data.results));
   };
 
+  // const handleChange = (event) => {
+  //   setSearchTerm(event.target.value);
+  // };
+
   useEffect(() => {
     fetchCharacters();
     fetchData();
@@ -60,8 +72,25 @@ export function CharacterListItem() {
     fetchCharactersOnPageChange(value);
   }
 
+  // const handleButton = async () => {
+  //   const fetchResults = () => {
+  //     api
+  //       .get(`character/?name=${searchTerm}`)
+  //       .then((response) => setCharacterInfo(response.data.results));
+  //   };
+
+  //   fetchResults();
+  // };
+
   return (
     <>
+      {/* <input
+        type="search"
+        placeholder="Search"
+        value={searchTerm}
+        onChange={handleChange}
+      />
+      <button onClick={handleButton}> Search </button> */}
       <S.Container>
         {characterInfo?.map((character) => {
           return (
