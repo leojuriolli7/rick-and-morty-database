@@ -5,11 +5,17 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
-  h1 {
-  }
 `;
 
 export const ListTitle = styled.h1`
   color: var(--text);
+  font-size: 2.7rem;
+
+  @media (max-width: 320px) {
+    font-size: 2.3rem;
+  }
+
+  @media (max-width: 242px) {
+    font-size: 1.7rem;
+  }
 `;

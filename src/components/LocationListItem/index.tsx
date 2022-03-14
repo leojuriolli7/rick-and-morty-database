@@ -66,7 +66,9 @@ export function LocationListItem() {
               onClick={() => setCurrentLocationAndOpenModal(location)}
             >
               <S.LocationName>{location.name}</S.LocationName>
-              <S.LocationInfo>Type: {location.type}</S.LocationInfo>
+              <S.LocationInfo>
+                Type: {location.type !== "" ? location.type : "Unknown"}
+              </S.LocationInfo>
               <S.LocationInfo>
                 Dimension:{" "}
                 {location.dimension !== ""
