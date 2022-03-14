@@ -53,6 +53,16 @@ export const ResidentName = styled.p`
   text-align: center;
 `;
 
+export const NoResidentsContainer = styled.p`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 3rem;
+  font-weight: 500;
+  color: var(--text);
+  font-size: 1.5rem;
+`;
+
 export const NoResidentsMessage = styled.p`
   text-align: center;
 `;

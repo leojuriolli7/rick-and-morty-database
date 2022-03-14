@@ -54,24 +54,30 @@ export function LocationDetailsModal({
         </Modal.Header>
         <Modal.Body className="d-flex align-items-center flex-column">
           <S.Title>Residents:</S.Title>
-          <S.DetailsContainer>
-            {residents.length !== 0 ? (
-              residents?.map((resident) => (
-                <S.Resident key={resident.name}>
-                  <S.ResidentPhoto src={resident.image} alt="Resident" />
-                  <S.ResidentName>{resident.name}</S.ResidentName>
-                </S.Resident>
-              ))
-            ) : (
-              <>
-                <S.Resident>
-                  <S.NoResidentsMessage>
-                    No Known Residents
-                  </S.NoResidentsMessage>
-                </S.Resident>
-              </>
-            )}
-          </S.DetailsContainer>
+          {residents.length !== 0 ? (
+            <S.DetailsContainer>
+              {residents.length !== 0 ? (
+                residents?.map((resident) => (
+                  <S.Resident key={resident.name}>
+                    <S.ResidentPhoto src={resident.image} alt="Resident" />
+                    <S.ResidentName>{resident.name}</S.ResidentName>
+                  </S.Resident>
+                ))
+              ) : (
+                <>
+                  <S.Resident>
+                    <S.NoResidentsMessage>
+                      No Known Residents
+                    </S.NoResidentsMessage>
+                  </S.Resident>
+                </>
+              )}
+            </S.DetailsContainer>
+          ) : (
+            <S.NoResidentsContainer>
+              <S.NoResidentsMessage>No Known Residents</S.NoResidentsMessage>
+            </S.NoResidentsContainer>
+          )}
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={closeModal} variant="dark">
