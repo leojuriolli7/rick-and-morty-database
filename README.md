@@ -4,4 +4,4 @@ This app is a prototype of a database where one may access a list of all charact
 - When a character is clicked, a modal opens with more info.
 - When an episode is clicked, a modal opens with all characters in the episode.
 
-This app was created with NextJS and consumes the Rick and Morty API through React Query.
+This app was created with NextJS and consumes the Rick and Morty API through Axios.
