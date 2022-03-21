@@ -12,6 +12,7 @@ interface CharacterDetailsModalProps {
 
 interface EpisodesProps {
   name: string;
+  episode: string;
 }
 
 export function CharacterDetailsModal({
@@ -75,11 +76,13 @@ export function CharacterDetailsModal({
             </S.Details>
             <S.Details>
               <S.DetailsTitle>First seen in:</S.DetailsTitle>{" "}
-              {episodes[0]?.name}
+              {`${episodes[0]?.name} (${episodes[0]?.episode})`}
             </S.Details>
             <S.Details>
               <S.DetailsTitle>Last seen in:</S.DetailsTitle>{" "}
-              {episodes.slice(-1).pop()?.name}
+              {`${episodes.slice(-1).pop()?.name} (${
+                episodes.slice(-1).pop()?.episode
+              })`}
             </S.Details>
           </S.DetailsContainer>
         </Modal.Body>

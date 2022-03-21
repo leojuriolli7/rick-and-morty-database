@@ -1,9 +1,6 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  img {
-  }
-
   .modal-header {
     div::first-letter {
       text-transform: capitalize;

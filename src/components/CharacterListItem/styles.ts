@@ -51,7 +51,7 @@ export const CharacterImage = styled.img`
 `;
 
 export const CharacterName = styled.h2`
-  margin-top: 1rem;
+  margin: 1rem 0.5rem 0.5rem;
   font-size: 1.3rem;
   line-height: 30px;
   text-align: center;

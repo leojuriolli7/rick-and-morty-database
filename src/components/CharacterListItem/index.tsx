@@ -1,9 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
-import { Pagination } from "@mui/material";
+import { Button, Pagination } from "@mui/material";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { api } from "../../pages/api/api";
 import { CharacterDetailsModal } from "../Modals/CharacterDetailsModal";
+import { SearchInput } from "../SearchInput";
 import * as S from "./styles";
 
 interface CharacterInterface {
@@ -31,6 +32,8 @@ export function CharacterListItem() {
   const [characterDetailsModal, setCharacterDetailsModal] = useState(false);
   const [currentCharacter, setCurrentCharacter] = useState(false);
 
+  const [searchValues, setSearchValues] = useState("");
+
   const fetchCharacters = async () => {
     await api
       .get(`character/?page=${page}`)
@@ -50,6 +53,12 @@ export function CharacterListItem() {
       .then((response) => setCharacterInfo(response.data.results));
   };
 
+  const fetchSearchedCharactersOnPageChange = async (value) => {
+    await api
+      .get(`character/?page=${value}&name=${searchValues.search}`)
+      .then((response) => setCharacterInfo(response.data.results));
+  };
+
   useEffect(() => {
     fetchCharacters();
     fetchData();
@@ -64,12 +73,25 @@ export function CharacterListItem() {
 
   function handlePaginationChange(e, value) {
     setPage(value);
-    router.push(`/?page=${value}`, undefined, { shallow: true });
-    fetchCharactersOnPageChange(value);
+    if (searchValues == "") {
+      router.push(`/?page=${value}`, undefined, { shallow: true });
+      fetchCharactersOnPageChange(value);
+    } else {
+      router.push(`/?page=${value}&name=${searchValues.search}`, undefined, {
+        shallow: true,
+      });
+      fetchSearchedCharactersOnPageChange(value);
+    }
   }
 
   return (
     <>
+      <SearchInput
+        setPage={setPage}
+        setCharacterInfo={setCharacterInfo}
+        setCharacterPackageInfo={setCharacterPackageInfo}
+        setSearchValues={setSearchValues}
+      />
       <S.Container>
         {characterInfo?.map((character) => {
           return (
@@ -96,9 +118,8 @@ export function CharacterListItem() {
         />
       </S.Container>
       <Pagination
-        count={characterPackageInfo?.data?.info.pages}
+        count={characterPackageInfo?.data?.info?.pages}
         color="primary"
-        className="pagination"
         page={page}
         onChange={handlePaginationChange}
       />
