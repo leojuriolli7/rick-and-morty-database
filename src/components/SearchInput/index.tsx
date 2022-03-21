@@ -1,5 +1,6 @@
 import { Formik, Field, Form, FormikHelpers } from "formik";
 import { api } from "../../pages/api/api";
+import * as S from "./styles";
 
 interface Values {
   search: string;
@@ -12,7 +13,7 @@ export function SearchInput({
   setPage,
 }) {
   return (
-    <div>
+    <S.Container>
       <Formik
         initialValues={{
           search: "",
@@ -34,11 +35,16 @@ export function SearchInput({
         }}
       >
         <Form>
-          <Field id="search" name="search" placeholder="search" type="search" />
+          <Field
+            id="search"
+            name="search"
+            placeholder="Search Characters"
+            type="search"
+          />
 
-          <button type="submit">Submit</button>
+          <button type="submit">Search</button>
         </Form>
       </Formik>
-    </div>
+    </S.Container>
   );
 }
