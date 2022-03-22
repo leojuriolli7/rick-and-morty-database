@@ -7,7 +7,7 @@ export const Container = styled.div`
   input {
     border: white 1px solid;
     padding: 0.5rem 1rem;
-    border-radius: 12px;
+    border-radius: 20px;
     box-shadow: 1px 5px 15px 5px rgba(0, 0, 0, 0.04);
     margin-right: 10px;
   }
