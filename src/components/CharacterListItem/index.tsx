@@ -6,6 +6,9 @@ import { api } from "../../pages/api/api";
 import { CharacterDetailsModal } from "../Modals/CharacterDetailsModal";
 import { SearchInput } from "../SearchInput";
 import * as S from "./styles";
+import Lottie from "react-lottie";
+import * as animationData from "../../assets/portalAnimation.json";
+import { LoadingLottie } from "../LoadingLottie";
 
 interface CharacterInterface {
   includes(searchTerm: string): unknown;
@@ -26,6 +29,7 @@ interface CharacterInterface {
 
 export function CharacterListItem() {
   const router = useRouter();
+  const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(Number(router.query.page || 1));
   const [characterInfo, setCharacterInfo] = useState<CharacterInterface[]>([]);
   const [characterPackageInfo, setCharacterPackageInfo] = useState(null);
@@ -38,6 +42,7 @@ export function CharacterListItem() {
     await api
       .get(`character/?page=${page}`)
       .then((response) => setCharacterInfo(response.data.results));
+    setLoading(false);
   };
 
   const fetchData = async () => {
@@ -48,15 +53,19 @@ export function CharacterListItem() {
   };
 
   const fetchCharactersOnPageChange = async (value) => {
+    setLoading(true);
     await api
       .get(`character/?page=${value}`)
       .then((response) => setCharacterInfo(response.data.results));
+    setLoading(false);
   };
 
   const fetchSearchedCharactersOnPageChange = async (value) => {
+    setLoading(true);
     await api
       .get(`character/?page=${value}&name=${searchValues.search}`)
       .then((response) => setCharacterInfo(response.data.results));
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -86,43 +95,49 @@ export function CharacterListItem() {
 
   return (
     <>
-      <SearchInput
-        setPage={setPage}
-        setCharacterInfo={setCharacterInfo}
-        setCharacterPackageInfo={setCharacterPackageInfo}
-        setSearchValues={setSearchValues}
-      />
-      <S.Container>
-        {characterInfo?.map((character) => {
-          return (
-            <S.Content
-              key={character.id}
-              onClick={() => setCurrentCharacterAndOpenModal(character)}
-            >
-              <S.CharacterImage
-                src={character.image}
-                alt={`Photo of ${character.name}`}
-              />
-              <S.CharacterName>{character.name}</S.CharacterName>
-              <S.CharacterStatus activeStatus={character.status}>
-                {character.status}
-              </S.CharacterStatus>
-            </S.Content>
-          );
-        })}
+      {loading ? (
+        <LoadingLottie />
+      ) : (
+        <>
+          <SearchInput
+            setPage={setPage}
+            setCharacterInfo={setCharacterInfo}
+            setCharacterPackageInfo={setCharacterPackageInfo}
+            setSearchValues={setSearchValues}
+          />
+          <S.Container>
+            {characterInfo?.map((character) => {
+              return (
+                <S.Content
+                  key={character.id}
+                  onClick={() => setCurrentCharacterAndOpenModal(character)}
+                >
+                  <S.CharacterImage
+                    src={character.image}
+                    alt={`Photo of ${character.name}`}
+                  />
+                  <S.CharacterName>{character.name}</S.CharacterName>
+                  <S.CharacterStatus activeStatus={character.status}>
+                    {character.status}
+                  </S.CharacterStatus>
+                </S.Content>
+              );
+            })}
 
-        <CharacterDetailsModal
-          character={currentCharacter}
-          isOpen={characterDetailsModal}
-          closeModal={() => setCharacterDetailsModal(false)}
-        />
-      </S.Container>
-      <Pagination
-        count={characterPackageInfo?.data?.info?.pages}
-        color="primary"
-        page={page}
-        onChange={handlePaginationChange}
-      />
+            <CharacterDetailsModal
+              character={currentCharacter}
+              isOpen={characterDetailsModal}
+              closeModal={() => setCharacterDetailsModal(false)}
+            />
+          </S.Container>
+          <Pagination
+            count={characterPackageInfo?.data?.info?.pages}
+            color="primary"
+            page={page}
+            onChange={handlePaginationChange}
+          />
+        </>
+      )}
     </>
   );
 }

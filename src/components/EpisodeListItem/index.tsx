@@ -2,6 +2,7 @@ import { Pagination } from "@mui/material";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { api } from "../../pages/api/api";
+import { LoadingLottie } from "../LoadingLottie";
 import { EpisodeDetailsModal } from "../Modals/EpisodeDetailsModal";
 import * as S from "./styles";
 
@@ -15,6 +16,7 @@ interface EpisodeInterface {
 
 export function EpisodeListItem() {
   const router = useRouter();
+  const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(Number(router.query.page || 1));
   const [episodes, setEpisodes] = useState<EpisodeInterface[]>([]);
   const [episodePackageInfo, setEpisodePackageInfo] = useState(null);
@@ -25,6 +27,7 @@ export function EpisodeListItem() {
     await api
       .get(`episode/?page=${page}`)
       .then((response) => setEpisodes(response.data.results));
+    setLoading(false);
   };
 
   const fetchData = async () => {
@@ -34,9 +37,11 @@ export function EpisodeListItem() {
   };
 
   const fetchEpisodesOnPageChange = async (value) => {
+    setLoading(true);
     await api
       .get(`episode/?page=${value}`)
       .then((response) => setEpisodes(response.data.results));
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -58,33 +63,39 @@ export function EpisodeListItem() {
 
   return (
     <>
-      <S.Container>
-        {episodes?.map((episode) => {
-          return (
-            <S.Content
-              key={episode.id}
-              onClick={() => setCurrentEpisodeAndOpenModal(episode)}
-            >
-              <S.EpisodeName>{episode.name}</S.EpisodeName>
-              <S.EpisodeDetails>{episode.air_date}</S.EpisodeDetails>
-              <S.EpisodeDetails>{episode.episode}</S.EpisodeDetails>
-            </S.Content>
-          );
-        })}
+      {loading ? (
+        <LoadingLottie />
+      ) : (
+        <>
+          <S.Container>
+            {episodes?.map((episode) => {
+              return (
+                <S.Content
+                  key={episode.id}
+                  onClick={() => setCurrentEpisodeAndOpenModal(episode)}
+                >
+                  <S.EpisodeName>{episode.name}</S.EpisodeName>
+                  <S.EpisodeDetails>{episode.air_date}</S.EpisodeDetails>
+                  <S.EpisodeDetails>{episode.episode}</S.EpisodeDetails>
+                </S.Content>
+              );
+            })}
 
-        <EpisodeDetailsModal
-          episode={currentEpisode}
-          isOpen={openModal}
-          closeModal={() => setOpenModal(false)}
-        />
-      </S.Container>
-      <Pagination
-        count={episodePackageInfo?.data?.info.pages}
-        color="primary"
-        className="pagination"
-        page={page}
-        onChange={handlePaginationChange}
-      />
+            <EpisodeDetailsModal
+              episode={currentEpisode}
+              isOpen={openModal}
+              closeModal={() => setOpenModal(false)}
+            />
+          </S.Container>
+          <Pagination
+            count={episodePackageInfo?.data?.info.pages}
+            color="primary"
+            className="pagination"
+            page={page}
+            onChange={handlePaginationChange}
+          />
+        </>
+      )}
     </>
   );
 }
