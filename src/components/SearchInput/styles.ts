@@ -1,6 +1,9 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
+  width: 100%;
+  text-align: center;
+
   input {
     border: white 1px solid;
     padding: 0.5rem 1rem;

@@ -41,6 +41,7 @@ export function SearchInput({
             name="search"
             placeholder="Search Characters"
             type="search"
+            autocomplete="off"
           />
 
           <Button type="submit" text="Search" />
