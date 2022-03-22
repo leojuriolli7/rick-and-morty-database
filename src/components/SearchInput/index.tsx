@@ -1,5 +1,6 @@
 import { Formik, Field, Form, FormikHelpers } from "formik";
 import { api } from "../../pages/api/api";
+import { Button } from "../Button";
 import * as S from "./styles";
 
 interface Values {
@@ -42,7 +43,7 @@ export function SearchInput({
             type="search"
           />
 
-          <button type="submit">Search</button>
+          <Button type="submit" text="Search" />
         </Form>
       </Formik>
     </S.Container>
