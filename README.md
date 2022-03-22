@@ -8,3 +8,6 @@ This app is a prototype of a database where one may access a list of all charact
 - When a location is clicked, a modal opens with all residents from that location.
 
 This app was created with NextJS and consumes the Rick and Morty API through Axios. It has pagination through Material UI and a Search Input to find specific characters.
+
+The app accessible through Heroku:
+https://rick-and-morty-base.herokuapp.com/
