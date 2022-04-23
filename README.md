@@ -11,3 +11,30 @@ This app was created with NextJS and consumes the Rick and Morty API through Axi
 
 The app accessible through Heroku:
 https://rick-and-morty-base.herokuapp.com/
+
+## Installation
+
+Clone the project:
+
+```bash
+git clone git@github.com:leojuriolli7/rick-and-morty-database.git
+```
+
+Go to the project directory:
+
+```bash
+cd rick-and-morty-database
+```
+
+Install the project dependencies:
+
+```bash
+npm install
+```
+## Usage
+
+Start the application:
+
+```bash
+npm start
+```
