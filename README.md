@@ -10,7 +10,7 @@ This app is a prototype of a database where one may access a list of all charact
 This app was created with NextJS and consumes the Rick and Morty API through Axios. It has pagination through Material UI and a Search Input to find specific characters.
 
 The app is deployed on Vercel:
-https://rick-and-morty-database-leojuriolli.vercel.app/
+https://rick-and-morty-base.vercel.app/
 
 ## Installation
 
