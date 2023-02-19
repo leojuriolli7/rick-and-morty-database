@@ -2,11 +2,12 @@ import { Pagination } from "@mui/material";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { api } from "../../pages/api/api";
+import { EpisodesProps } from "../../pages/episodes";
 import { LoadingLottie } from "../LoadingLottie";
 import { EpisodeDetailsModal } from "../Modals/EpisodeDetailsModal";
 import * as S from "./styles";
 
-interface EpisodeInterface {
+export interface EpisodeInterface {
   id: number;
   name: string;
   air_date: string;
@@ -14,27 +15,16 @@ interface EpisodeInterface {
   characters: any;
 }
 
-export function EpisodeListItem() {
+export function EpisodeListItem({ episodes: initialEpisodes }: EpisodesProps) {
   const router = useRouter();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(Number(router.query.page || 1));
-  const [episodes, setEpisodes] = useState<EpisodeInterface[]>([]);
-  const [episodePackageInfo, setEpisodePackageInfo] = useState(null);
+  const [episodes, setEpisodes] = useState<EpisodeInterface[]>(
+    initialEpisodes?.results || []
+  );
+  const episodePackageInfo = initialEpisodes?.info;
   const [openModal, setOpenModal] = useState(false);
   const [currentEpisode, setCurrentEpisode] = useState(null);
-
-  const fetchEpisodes = async () => {
-    await api
-      .get(`episode/?page=${page}`)
-      .then((response) => setEpisodes(response.data.results));
-    setLoading(false);
-  };
-
-  const fetchData = async () => {
-    await api
-      .get(`episode/?page=${page}`)
-      .then((response) => setEpisodePackageInfo(response));
-  };
 
   const fetchEpisodesOnPageChange = async (value) => {
     setLoading(true);
@@ -43,12 +33,6 @@ export function EpisodeListItem() {
       .then((response) => setEpisodes(response.data.results));
     setLoading(false);
   };
-
-  useEffect(() => {
-    fetchEpisodes();
-    fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const setCurrentEpisodeAndOpenModal = (episode) => {
     setCurrentEpisode(episode);
@@ -88,7 +72,7 @@ export function EpisodeListItem() {
             />
           </S.Container>
           <Pagination
-            count={episodePackageInfo?.data?.info.pages}
+            count={episodePackageInfo?.pages}
             color="primary"
             className="pagination"
             page={page}

@@ -2,11 +2,12 @@ import { Pagination } from "@mui/material";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { api } from "../../pages/api/api";
+import { LocationsProps } from "../../pages/locations";
 import { LoadingLottie } from "../LoadingLottie";
 import { LocationDetailsModal } from "../Modals/LocationDetaisModal";
 import * as S from "./styles";
 
-interface LocationInterface {
+export interface LocationInterface {
   id: number;
   name: string;
   type: string;
@@ -14,27 +15,17 @@ interface LocationInterface {
   residents: [];
 }
 
-export function LocationListItem() {
-  const [locationInfo, setLocationInfo] = useState<LocationInterface[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [locationPackageInfo, setLocationPackageInfo] = useState(null);
+export function LocationListItem({ locations }: LocationsProps) {
+  const [locationInfo, setLocationInfo] = useState<LocationInterface[]>(
+    locations?.results || []
+  );
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
   const [page, setPage] = useState(Number(router.query.page || 1));
   const [openModal, setOpenModal] = useState(false);
   const [currentLocation, setCurrentLocation] = useState(null);
 
-  const fetchLocations = async () => {
-    await api
-      .get(`location/?page=${page}`)
-      .then((response) => setLocationInfo(response.data.results));
-    setLoading(false);
-  };
-
-  const fetchData = async () => {
-    await api
-      .get(`location/?page=${page}`)
-      .then((response) => setLocationPackageInfo(response));
-  };
+  const locationPackageInfo = locations?.info;
 
   const fetchLocationsOnPageChange = async (value) => {
     setLoading(true);
@@ -54,12 +45,6 @@ export function LocationListItem() {
     setCurrentLocation(location);
     setOpenModal(true);
   };
-
-  useEffect(() => {
-    fetchLocations();
-    fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <>
@@ -94,7 +79,7 @@ export function LocationListItem() {
             />
           </S.Container>
           <Pagination
-            count={locationPackageInfo?.data?.info.pages}
+            count={locationPackageInfo?.pages}
             color="primary"
             className="pagination"
             page={page}

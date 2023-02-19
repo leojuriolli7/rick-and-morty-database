@@ -27,7 +27,7 @@ export function SearchInput({
           setPage(1);
           api
             .get(`character/?name=${values.search}`)
-            .then((response) => setCharacterPackageInfo(response));
+            .then((response) => setCharacterPackageInfo(response.data.info));
 
           api
             .get(`character/?name=${values.search}`)
