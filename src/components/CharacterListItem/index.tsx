@@ -6,11 +6,10 @@ import { api } from "../../pages/api/api";
 import { CharacterDetailsModal } from "../Modals/CharacterDetailsModal";
 import { SearchInput } from "../SearchInput";
 import * as S from "./styles";
-import Lottie from "react-lottie";
-import * as animationData from "../../assets/portalAnimation.json";
 import { LoadingLottie } from "../LoadingLottie";
+import { CharactersProps } from "../../pages";
 
-interface CharacterInterface {
+export interface CharacterInterface {
   includes(searchTerm: string): unknown;
   id: string;
   name: string;
@@ -27,30 +26,20 @@ interface CharacterInterface {
   episode: [];
 }
 
-export function CharacterListItem() {
+export function CharacterListItem({ characters }: CharactersProps) {
   const router = useRouter();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(Number(router.query.page || 1));
-  const [characterInfo, setCharacterInfo] = useState<CharacterInterface[]>([]);
-  const [characterPackageInfo, setCharacterPackageInfo] = useState(null);
+  const [characterInfo, setCharacterInfo] = useState<CharacterInterface[]>(
+    characters.results || []
+  );
+  const [characterPackageInfo, setCharacterPackageInfo] = useState(
+    characters?.info
+  );
   const [characterDetailsModal, setCharacterDetailsModal] = useState(false);
   const [currentCharacter, setCurrentCharacter] = useState(false);
 
   const [searchValues, setSearchValues] = useState("");
-
-  const fetchCharacters = async () => {
-    await api
-      .get(`character/?page=${page}`)
-      .then((response) => setCharacterInfo(response.data.results));
-    setLoading(false);
-  };
-
-  const fetchData = async () => {
-    await api
-      .get(`character/?page=${page}`)
-      .then((response) => setCharacterPackageInfo(response));
-    characterPackageInfo;
-  };
 
   const fetchCharactersOnPageChange = async (value) => {
     setLoading(true);
@@ -67,13 +56,6 @@ export function CharacterListItem() {
       .then((response) => setCharacterInfo(response.data.results));
     setLoading(false);
   };
-
-  useEffect(() => {
-    fetchCharacters();
-    fetchData();
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const setCurrentCharacterAndOpenModal = (character: any) => {
     setCurrentCharacter(character);
@@ -131,7 +113,7 @@ export function CharacterListItem() {
             />
           </S.Container>
           <Pagination
-            count={characterPackageInfo?.data?.info?.pages}
+            count={characterPackageInfo?.pages}
             color="primary"
             page={page}
             onChange={handlePaginationChange}
